@@ -26,6 +26,9 @@ try
       .WriteTo.Console(new ExpressionTemplate("[{@t:HH:mm:ss} {@l:u3}{#if @tr is not null} ({substring(@tr,0,4)}:{substring(@sp,0,4)}){#end}] {@m}\n{@x}", theme: TemplateTheme.Code))
   );
 
+  builder.Services.AddEndpointsApiExplorer();
+  builder.Services.AddSwaggerGen();
+
   builder.Services.AddControllers();
 
   var app = builder.Build();
@@ -37,6 +40,8 @@ try
   else
   {
     app.UseDeveloperExceptionPage();
+    app.UseSwagger();
+    app.UseSwaggerUI();
   }
 
   app.UseHttpLogging();
