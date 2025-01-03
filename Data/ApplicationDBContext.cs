@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using LearnCsharp.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace LearnCsharp.Data
+namespace api.Data
 {
     public class ApplicationDBContext : DbContext
     {

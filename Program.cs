@@ -1,7 +1,7 @@
 using System.Text.Json;
-
+using api.Data;
 using Microsoft.AspNetCore.HttpLogging;
-
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Serilog.Templates;
 using Serilog.Templates.Themes;
@@ -31,6 +31,11 @@ try
 
   builder.Services.AddControllers();
 
+  builder.Services.AddDbContext<ApplicationDBContext>(options =>
+  {
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+  });
+
   var app = builder.Build();
 
   if (!app.Environment.IsDevelopment())
@@ -59,6 +64,7 @@ try
 catch (Exception ex)
 {
   Log.Fatal(ex, "Application terminated unexpectedly");
+  throw; // Re-throw the exception to get more details in the logs
 }
 finally
 {

@@ -2,6 +2,7 @@
 bin/
 obj/
 logs/
+Migrations/
 
 # Ignore user-specific files
 *.user
