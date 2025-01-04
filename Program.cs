@@ -16,6 +16,7 @@ try
   var builder = WebApplication.CreateBuilder(args);
 
   builder.Services.AddScoped<IStockRepository, StockRepository>();
+  builder.Services.AddScoped<ICommentRepository, CommentRepository>();
 
   builder.Services.ConfigureHttpJsonOptions(options =>
   {
