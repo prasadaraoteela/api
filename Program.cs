@@ -57,7 +57,6 @@ try
   app.MapControllers();
 
   app.MapGet("/error", () => Results.Problem("An error occurred.", statusCode: StatusCodes.Status500InternalServerError));
-  app.MapGet("/division", (int numerator, int denominator) => numerator / denominator);
 
   app.Run();
 }

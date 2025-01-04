@@ -48,3 +48,4 @@ Migrations/
 
 # Ignore compiled class files
 *.class
+.fake
