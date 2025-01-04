@@ -8,10 +8,14 @@ using api.Data;
 using Serilog;
 using Serilog.Templates;
 using Serilog.Templates.Themes;
+using api.Interfaces;
+using api.Repositories;
 
 try
 {
   var builder = WebApplication.CreateBuilder(args);
+
+  builder.Services.AddScoped<IStockRepository, StockRepository>();
 
   builder.Services.ConfigureHttpJsonOptions(options =>
   {
