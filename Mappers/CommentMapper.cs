@@ -13,8 +13,18 @@ namespace api.Mappers
                 Title = comment.Title,
                 Body = comment.Body,
                 Created = comment.Created,
-                StockId = comment.StockId,
-                Stock = comment.Stock
+                StockId = comment.StockId
+            };
+        }
+
+        public static Comment ToComment(this CreateCommentDto createCommentDto)
+        {
+            return new Comment
+            {
+                Title = createCommentDto.Title,
+                Body = createCommentDto.Body,
+                Created = createCommentDto.Created,
+                StockId = createCommentDto.StockId
             };
         }
     }

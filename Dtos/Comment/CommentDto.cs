@@ -1,5 +1,3 @@
-using api.Models;
-
 namespace api.Dtos.Comment
 {
     public class CommentDto
@@ -9,6 +7,5 @@ namespace api.Dtos.Comment
         public string Body { get; set; } = string.Empty;
         public DateTime Created { get; set; } = DateTime.Now;
         public int? StockId { get; set; }
-        public Models.Stock? Stock { get; set; }
     }
 }

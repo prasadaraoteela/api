@@ -32,12 +32,12 @@ namespace api.Repositories
 
         public async Task<List<Stock>> GetAllAsync()
         {
-            return await context.Stocks.ToListAsync();
+            return await context.Stocks.Include(stock => stock.Comments).ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)
         {
-            var stock = await context.Stocks.FindAsync(id);
+            var stock = await context.Stocks.Include(stock => stock.Comments).FirstOrDefaultAsync(stock => stock.Id == id);
 
             if (stock == null)
             {

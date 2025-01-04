@@ -15,7 +15,8 @@ namespace api.Mappers
                 Price = stock.Price,
                 Dividend = stock.Dividend,
                 Industry = stock.Industry,
-                MarketCap = stock.MarketCap
+                MarketCap = stock.MarketCap,
+                Comments = stock.Comments.Select(comment => comment.ToCommentDto()).ToList()
             };
         }
 
