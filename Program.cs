@@ -1,7 +1,10 @@
 using System.Text.Json;
-using api.Data;
+
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.EntityFrameworkCore;
+
+using api.Data;
+
 using Serilog;
 using Serilog.Templates;
 using Serilog.Templates.Themes;

@@ -1,6 +1,5 @@
 using api.Dtos.Stock;
-
-using LearnCsharp.Models;
+using api.Models;
 
 namespace api.Mappers
 {

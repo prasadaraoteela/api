@@ -1,19 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LearnCsharp.Models;
 using Microsoft.EntityFrameworkCore;
+
+using api.Models;
 
 namespace api.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : DbContext(options)
     {
-        public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
-        {
-        }
-
-        public DbSet<Stock> Stocks { get; set; }
-        public DbSet<Comment> Comments { get; set; }
+        public required DbSet<Stock> Stocks { get; set; }
+        public required DbSet<Comment> Comments { get; set; }
     }
 }
