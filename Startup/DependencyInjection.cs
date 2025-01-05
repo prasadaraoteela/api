@@ -1,0 +1,18 @@
+using api.Interfaces;
+using api.Repositories;
+
+namespace api.Startup
+{
+    public class DependencyInjection : IStartup
+    {
+        public void Configure(WebApplication application)
+        {
+        }
+
+        public void ConfigureBuilder(WebApplicationBuilder builder)
+        {
+            builder.Services.AddScoped<IStockRepository, StockRepository>();
+            builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+        }
+    }
+}
