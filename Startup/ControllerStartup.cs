@@ -8,6 +8,7 @@ namespace api.Startup
         {
             application.UseRouting();
             application.MapControllers();
+            application.UseHttpsRedirection();
         }
 
         public void ConfigureBuilder(WebApplicationBuilder builder)

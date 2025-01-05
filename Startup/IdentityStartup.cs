@@ -1,3 +1,5 @@
+using System.Text;
+
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
@@ -11,6 +13,8 @@ namespace api.Startup
     {
         public void Configure(WebApplication application)
         {
+            application.UseAuthentication();
+            application.UseAuthorization();
         }
 
         public void ConfigureBuilder(WebApplicationBuilder builder)
@@ -40,7 +44,13 @@ namespace api.Startup
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuer = true,
-                    ValidIssuer = builder.Configuration["JWT:Issuer"]
+                    ValidIssuer = builder.Configuration["JWT:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration["JWT:Audience"],
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"]!)
+                    )
                 };
             });
         }
