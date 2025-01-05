@@ -1,4 +1,3 @@
-using api.Dtos.Comment;
 using api.Models;
 
 namespace api.Interfaces
@@ -11,7 +10,7 @@ namespace api.Interfaces
 
         Task<Comment> CreateAsync(Comment comment);
 
-        Task<Comment?> UpdateAsync(int id, UpdateCommentDto updateCommentDto);
+        Task<Comment?> UpdateAsync(int id, Comment comment);
 
         Task<Comment?> DeleteAsync(int id);
     }

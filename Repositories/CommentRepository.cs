@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
 using api.Data;
-using api.Dtos.Comment;
 using api.Interfaces;
 using api.Models;
 
@@ -44,7 +43,7 @@ namespace api.Repositories
         }
 
 
-        public async Task<Comment?> UpdateAsync(int id, UpdateCommentDto updateCommentDto)
+        public async Task<Comment?> UpdateAsync(int id, Comment comment)
         {
             var existingComment = await context.Comments.FindAsync(id);
             if (existingComment == null)
@@ -52,10 +51,8 @@ namespace api.Repositories
                 return null;
             }
 
-            existingComment.Title = updateCommentDto.Title;
-            existingComment.Body = updateCommentDto.Body;
-            existingComment.Created = updateCommentDto.Created;
-            existingComment.StockId = updateCommentDto.StockId;
+            existingComment.Title = comment.Title;
+            existingComment.Body = comment.Body;
 
             await context.SaveChangesAsync();
             return existingComment;

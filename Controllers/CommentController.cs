@@ -15,7 +15,7 @@ namespace api.Controllers
         public async Task<ActionResult<List<CommentDto>>> GetComments()
         {
             var comments = await commentRepository.GetAllAsync();
-            return comments.Select(comment => comment.ToCommentDto()).ToList();
+            return Ok(comments.Select(comment => comment.ToCommentDto()).ToList());
         }
 
         [HttpGet]
@@ -27,7 +27,7 @@ namespace api.Controllers
             {
                 return NotFound();
             }
-            return comment.ToCommentDto();
+            return Ok(comment.ToCommentDto());
         }
 
         [HttpPost("{stockId}")]
@@ -45,12 +45,12 @@ namespace api.Controllers
         [Route("{id}")]
         public async Task<ActionResult<CommentDto>> UpdateComment([FromRoute] int id, [FromBody] UpdateCommentDto updateCommentDto)
         {
-            var comment = await commentRepository.UpdateAsync(id, updateCommentDto);
+            var comment = await commentRepository.UpdateAsync(id, updateCommentDto.ToComment());
             if (comment == null)
             {
-                return NotFound();
+                return NotFound("Comment not found.");
             }
-            return comment.ToCommentDto();
+            return Ok(comment.ToCommentDto());
         }
 
         [HttpDelete]
@@ -62,7 +62,7 @@ namespace api.Controllers
             {
                 return NotFound();
             }
-            return comment.ToCommentDto();
+            return Ok(comment.ToCommentDto());
         }
 
     }

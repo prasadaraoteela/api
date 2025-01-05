@@ -15,7 +15,7 @@ namespace api.Controllers
         public async Task<ActionResult<List<StockDto>>> GetStocks()
         {
             var stocks = await stockRepository.GetAllAsync();
-            return stocks.Select(stock => stock.ToStockDto()).ToList();
+            return Ok(stocks.Select(stock => stock.ToStockDto()).ToList());
         }
 
         [HttpGet("{id}")]
@@ -28,7 +28,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return stock.ToStockDto();
+            return Ok(stock.ToStockDto());
         }
 
         [HttpPost]
@@ -50,7 +50,7 @@ namespace api.Controllers
                 return NotFound();
             }
 
-            return stock.ToStockDto();
+            return Ok(stock.ToStockDto());
         }
 
         [HttpDelete]
