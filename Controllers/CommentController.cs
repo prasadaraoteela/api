@@ -8,7 +8,7 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("api/comments")]
-    public class CommentController(ICommentRepository commentRepository) : ControllerBase
+    public class CommentController(ICommentRepository commentRepository, IStockRepository stockRepository) : ControllerBase
     {
 
         [HttpGet]
@@ -30,10 +30,14 @@ namespace api.Controllers
             return comment.ToCommentDto();
         }
 
-        [HttpPost]
-        public async Task<ActionResult<CommentDto>> CreateComment([FromBody] CreateCommentDto createCommentDto)
+        [HttpPost("{stockId}")]
+        public async Task<ActionResult<CommentDto>> CreateComment([FromRoute] int stockId, [FromBody] CreateCommentDto createCommentDto)
         {
-            var comment = await commentRepository.CreateAsync(createCommentDto.ToComment());
+            if (!await stockRepository.StockExists(stockId))
+            {
+                return BadRequest("Stock does not exist.");
+            }
+            var comment = await commentRepository.CreateAsync(createCommentDto.ToComment(stockId));
             return CreatedAtAction(nameof(GetCommentById), new { id = comment.Id }, comment.ToCommentDto());
         }
 
