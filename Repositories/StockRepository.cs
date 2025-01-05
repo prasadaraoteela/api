@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 
 using api.Data;
 using api.Dtos.Stock;
+using api.Helpers;
 using api.Interfaces;
 using api.Models;
 
@@ -30,9 +31,39 @@ namespace api.Repositories
             return stock;
         }
 
-        public async Task<List<Stock>> GetAllAsync()
+        public async Task<List<Stock>> GetAllAsync(StockQuery query)
         {
-            return await context.Stocks.Include(stock => stock.Comments).ToListAsync();
+            var stocks = context.Stocks.Include(stock => stock.Comments).AsQueryable();
+
+            if (!string.IsNullOrWhiteSpace(query.CompanyName))
+            {
+                stocks = stocks.Where(stock => stock.CompanyName.Contains(query.CompanyName));
+            }
+
+            if (!string.IsNullOrWhiteSpace(query.Symbol))
+            {
+                stocks = stocks.Where(stock => stock.Symbol.Contains(query.Symbol));
+            }
+
+            if (query.SortBy != null)
+            {
+                switch (query.SortBy)
+                {
+                    case SortByOptions.Symbol:
+                        stocks = query.IsDecsending ? stocks.OrderByDescending(stock => stock.Symbol) : stocks.OrderBy(stock => stock.Symbol);
+                        break;
+                    case SortByOptions.CompanyName:
+                        stocks = query.IsDecsending ? stocks.OrderByDescending(stock => stock.CompanyName) : stocks.OrderBy(stock => stock.CompanyName);
+                        break;
+                    case SortByOptions.Price:
+                        stocks = query.IsDecsending ? stocks.OrderByDescending(stock => stock.Price) : stocks.OrderBy(stock => stock.Price);
+                        break;
+                    default: break;
+                }
+            }
+            var skipNumber = (query.PageNumber - 1) * query.PageSize;
+
+            return await stocks.Skip(skipNumber).Take(query.PageSize).ToListAsync();
         }
 
         public async Task<Stock?> GetByIdAsync(int id)

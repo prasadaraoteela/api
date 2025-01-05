@@ -10,6 +10,8 @@ using Serilog.Templates;
 using Serilog.Templates.Themes;
 using api.Interfaces;
 using api.Repositories;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
+using Newtonsoft.Json.Converters;
 
 try
 {
@@ -41,6 +43,7 @@ try
   .AddNewtonsoftJson(options =>
   {
     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+    options.SerializerSettings.Converters.Add(new StringEnumConverter());
   });
 
   builder.Services.AddDbContext<ApplicationDBContext>(options =>
