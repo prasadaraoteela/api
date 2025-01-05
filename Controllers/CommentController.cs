@@ -25,7 +25,7 @@ namespace api.Controllers
             var comment = await commentRepository.GetByIdAsync(id);
             if (comment == null)
             {
-                return NotFound();
+                return NotFound("Comment does not exist");
             }
             return Ok(comment.ToCommentDto());
         }
@@ -48,7 +48,7 @@ namespace api.Controllers
             var comment = await commentRepository.UpdateAsync(id, updateCommentDto.ToComment());
             if (comment == null)
             {
-                return NotFound("Comment not found.");
+                return NotFound("Comment does not exist.");
             }
             return Ok(comment.ToCommentDto());
         }
@@ -60,7 +60,7 @@ namespace api.Controllers
             var comment = await commentRepository.DeleteAsync(id);
             if (comment == null)
             {
-                return NotFound();
+                return NotFound("Comment does not exist.");
             }
             return Ok(comment.ToCommentDto());
         }
