@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 using api.Dtos.Account;
 using api.Interfaces;
@@ -11,7 +12,7 @@ namespace api.Controllers
 {
     [ApiController]
     [Route("api/account")]
-    public class AccountController(UserManager<StockUser> userManager, ITokenService tokenService) : ControllerBase
+    public class AccountController(UserManager<StockUser> userManager, ITokenService tokenService, SignInManager<StockUser> signInManager) : ControllerBase
     {
 
         [HttpPost("register")]
@@ -61,5 +62,36 @@ namespace api.Controllers
             }
         }
 
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(LoginDto loginDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await userManager.Users.FirstOrDefaultAsync(user => user.UserName != null && user.UserName.ToLower() == loginDto.UserName.ToLower());
+
+            if (user == null)
+            {
+                return Unauthorized("Invalid user.");
+            }
+
+            var result = await signInManager.CheckPasswordSignInAsync(user: user, password: loginDto.Password, lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+            {
+                return Unauthorized("Username not found and/or password might incorrect.");
+            }
+
+            return Ok(
+                new NewUserDto
+                {
+                    UserName = user.UserName!,
+                    Email = user.Email!,
+                    Token = tokenService.CreateToken(user)
+                }
+                );
+        }
     }
 }
