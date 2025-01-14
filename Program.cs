@@ -3,12 +3,12 @@ using api.Startup;
 var builder = WebApplication.CreateBuilder(args);
 
 var startups = new List<api.Startup.IStartup>() {
+    new DatabaseStartup(),
     new ControllerStartup(),
     new SwaggerStartup(),
     new JsonConfigurationStartup(),
     new LoggingStartup(),
     new ErrorHandlingStartup(),
-    new DatabaseStartup(),
     new IdentityStartup(),
     new DependencyInjection(),
   };
