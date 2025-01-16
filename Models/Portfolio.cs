@@ -5,9 +5,9 @@ namespace api.Models
     [Table("Portfolios")]
     public class Portfolio
     {
-        required public string StockUserId { get; set; } = string.Empty;
-        required public int StockId { get; set; }
-        required public StockUser StockUser { get; set; }
-        required public Stock Stock { get; set; }
+        public string StockUserId { get; set; } = string.Empty;
+        public int StockId { get; set; } = 0;
+        public StockUser StockUser { get; set; }
+        public Stock Stock { get; set; }
     }
 }

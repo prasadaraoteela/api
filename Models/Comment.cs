@@ -12,5 +12,7 @@ namespace api.Models
         [ForeignKey("Stock")]
         public int? StockId { get; set; }
         public Stock? Stock { get; set; }
+        public string StockUserId { get; set; }
+        public StockUser StockUser { get; set; }
     }
 }

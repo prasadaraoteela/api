@@ -20,12 +20,12 @@ namespace api.Data
 
             builder.Entity<Portfolio>()
                 .HasOne(portfolio => portfolio.StockUser)
-                .WithMany(stockUser => stockUser.Portfolios)
+                .WithMany(user => user.Portfolios)
                 .HasForeignKey(portfolio => portfolio.StockUserId);
 
             builder.Entity<Portfolio>()
                 .HasOne(portfolio => portfolio.Stock)
-                .WithMany(stockUser => stockUser.Portfolios)
+                .WithMany(stock => stock.Portfolios)
                 .HasForeignKey(portfolio => portfolio.StockId);
 
             // List<IdentityRole> roles =
